@@ -24,9 +24,7 @@ def build_context_block(hits: list[dict]) -> str:
         chunk_id = hit.get("chunk_id", "?")
         page = hit.get("page")
         page_str = f", page {page}" if page and page > 0 else ""
-        blocks.append(
-            f"[SOURCE: {source}{page_str}, chunk {chunk_id}]\n{hit['text']}"
-        )
+        blocks.append(f"[SOURCE: {source}{page_str}, chunk {chunk_id}]\n{hit['text']}")
     return "\n\n".join(blocks)
 
 

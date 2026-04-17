@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 class Chunk:
     chunk_id: str
     doc_id: str
-    source: str          # filename or URL
+    source: str  # filename or URL
     page: int | None
     text: str
     token_count: int

@@ -65,7 +65,9 @@ class DocumentChunker:
         self.overlap = overlap
         self._enc = tiktoken.get_encoding(model)
 
-    def chunk_text(self, text: str, doc_id: str, source: str, page: int | None = None) -> list[Chunk]:
+    def chunk_text(
+        self, text: str, doc_id: str, source: str, page: int | None = None
+    ) -> list[Chunk]:
         raw_chunks = _split_text(text, self.chunk_size, self.overlap, self._enc)
         return [
             Chunk(
@@ -104,7 +106,9 @@ class DocumentChunker:
             text = page.extract_text() or ""
             text = re.sub(r"\s+", " ", text).strip()
             if text:
-                chunks.extend(self.chunk_text(text, f"{doc_id}_p{page_num}", path.name, page=page_num))
+                chunks.extend(
+                    self.chunk_text(text, f"{doc_id}_p{page_num}", path.name, page=page_num)
+                )
         return chunks
 
     def _chunk_docx(self, path: Path, doc_id: str) -> list[Chunk]:

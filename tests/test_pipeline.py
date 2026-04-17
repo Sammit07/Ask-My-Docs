@@ -2,8 +2,6 @@
 
 from unittest.mock import MagicMock, patch
 
-import pytest
-
 from src.generation.generator import AnswerResult
 
 
@@ -12,9 +10,17 @@ from src.generation.generator import AnswerResult
 @patch("src.pipeline.HybridRetriever")
 @patch("src.pipeline.Reranker")
 @patch("src.pipeline.AnswerGenerator")
-def test_pipeline_ask_full_flow(mock_gen_cls, mock_reranker_cls, mock_retriever_cls, mock_indexer_cls, mock_embedder_cls, tmp_path, monkeypatch):
-    from src.pipeline import RAGPipeline
+def test_pipeline_ask_full_flow(
+    mock_gen_cls,
+    mock_reranker_cls,
+    mock_retriever_cls,
+    mock_indexer_cls,
+    mock_embedder_cls,
+    tmp_path,
+    monkeypatch,
+):
     from src.config import Settings
+    from src.pipeline import RAGPipeline
 
     monkeypatch.setenv("OPENAI_API_KEY", "fake")
 
@@ -64,9 +70,17 @@ def test_pipeline_ask_full_flow(mock_gen_cls, mock_reranker_cls, mock_retriever_
 @patch("src.pipeline.HybridRetriever")
 @patch("src.pipeline.Reranker")
 @patch("src.pipeline.AnswerGenerator")
-def test_pipeline_returns_no_docs_message_when_empty(mock_gen_cls, mock_reranker_cls, mock_retriever_cls, mock_indexer_cls, mock_embedder_cls, tmp_path, monkeypatch):
-    from src.pipeline import RAGPipeline
+def test_pipeline_returns_no_docs_message_when_empty(
+    mock_gen_cls,
+    mock_reranker_cls,
+    mock_retriever_cls,
+    mock_indexer_cls,
+    mock_embedder_cls,
+    tmp_path,
+    monkeypatch,
+):
     from src.config import Settings
+    from src.pipeline import RAGPipeline
 
     monkeypatch.setenv("OPENAI_API_KEY", "fake")
     cfg = Settings(openai_api_key="fake", chroma_persist_dir=tmp_path / "chroma")

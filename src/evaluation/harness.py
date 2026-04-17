@@ -8,8 +8,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from statistics import mean
 
-from openai import OpenAI
 import structlog
+from openai import OpenAI
 
 from src.config import Settings, get_settings
 from src.evaluation.metrics import (
@@ -126,7 +126,11 @@ def run_evaluation(settings: Settings | None = None) -> EvalReport:
         faith = faithfulness(result.answer, context_texts, judge_client, cfg.eval_model)
         relevancy = answer_relevancy(question, result.answer, judge_client, cfg.eval_model)
         cov = citation_coverage(result.answer, result.retrieved_hits)
-        rouge = rouge_scores(result.answer, expected) if expected else {"rouge1_f": 0.0, "rougeL_f": 0.0}
+        rouge = (
+            rouge_scores(result.answer, expected)
+            if expected
+            else {"rouge1_f": 0.0, "rougeL_f": 0.0}
+        )
 
         passed = (
             faith >= cfg.faithfulness_threshold

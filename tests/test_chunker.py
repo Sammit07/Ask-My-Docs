@@ -1,9 +1,9 @@
 """Unit tests for the document chunker."""
 
 import pytest
-
-from src.ingestion.chunker import DocumentChunker, _split_text
 import tiktoken
+
+from src.ingestion.chunker import DocumentChunker
 
 
 @pytest.fixture

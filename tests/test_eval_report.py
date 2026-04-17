@@ -26,10 +26,12 @@ def test_empty_report_defaults():
 
 
 def test_avg_metrics():
-    r = EvalReport(results=[
-        _sample(0.8, 0.9, 1.0, True),
-        _sample(0.6, 0.7, 0.8, False),
-    ])
+    r = EvalReport(
+        results=[
+            _sample(0.8, 0.9, 1.0, True),
+            _sample(0.6, 0.7, 0.8, False),
+        ]
+    )
     assert r.avg_faithfulness == pytest.approx(0.7)
     assert r.avg_relevancy == pytest.approx(0.8)
     assert r.avg_citation_coverage == pytest.approx(0.9)

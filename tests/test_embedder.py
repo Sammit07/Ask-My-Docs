@@ -21,7 +21,9 @@ def test_openai_embedder_normalizes_embeddings(mock_openai):
     )
     mock_openai.return_value = mock_client
 
-    embedder = Embedder(model_name="text-embedding-3-small", api_key="fake", batch_size=2, dimensions=2)
+    embedder = Embedder(
+        model_name="text-embedding-3-small", api_key="fake", batch_size=2, dimensions=2
+    )
     vectors = embedder.embed_texts(["alpha", "beta"])
 
     assert vectors.shape == (2, 2)

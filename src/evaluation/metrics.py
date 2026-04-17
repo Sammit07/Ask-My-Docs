@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import re
 
-from openai import OpenAI
 import structlog
+from openai import OpenAI
 from rouge_score import rouge_scorer
 
 logger = structlog.get_logger(__name__)

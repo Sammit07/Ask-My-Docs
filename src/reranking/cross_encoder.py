@@ -23,11 +23,8 @@ class Reranker:
         scores = self._model.predict(pairs)
 
         ranked = sorted(
-            zip(scores, hits),
+            zip(scores, hits, strict=False),
             key=lambda x: x[0],
             reverse=True,
         )
-        return [
-            {**hit, "rerank_score": float(score)}
-            for score, hit in ranked[: self._top_k]
-        ]
+        return [{**hit, "rerank_score": float(score)} for score, hit in ranked[: self._top_k]]

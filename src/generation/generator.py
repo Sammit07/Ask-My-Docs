@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import re
 
-from openai import OpenAI
 import structlog
+from openai import OpenAI
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 from src.generation.prompts import SYSTEM_PROMPT, build_prompt
@@ -53,7 +53,7 @@ class AnswerGenerator:
         self._max_output_tokens = max_output_tokens
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10))
-    def generate(self, question: str, hits: list[dict]) -> "AnswerResult":
+    def generate(self, question: str, hits: list[dict]) -> AnswerResult:
         prompt = build_prompt(question, hits)
         response = self._client.responses.create(
             model=self._model_name,

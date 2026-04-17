@@ -1,12 +1,16 @@
 """Unit tests for RRF fusion and hybrid retriever."""
 
-import pytest
-
 from src.retrieval.hybrid import reciprocal_rank_fusion
 
 
 def _hit(chunk_id: str, score: float = 1.0) -> dict:
-    return {"chunk_id": chunk_id, "text": f"text for {chunk_id}", "score": score, "source": "test.txt", "page": 1}
+    return {
+        "chunk_id": chunk_id,
+        "text": f"text for {chunk_id}",
+        "score": score,
+        "source": "test.txt",
+        "page": 1,
+    }
 
 
 def test_rrf_combines_disjoint_lists():

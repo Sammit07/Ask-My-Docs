@@ -53,7 +53,8 @@ def test_run_evaluation_aggregates_results(
 ):
     dataset_path = tmp_path / "eval.jsonl"
     dataset_path.write_text(
-        json.dumps({"question": "What is the policy?", "answer": "The policy is documented."}) + "\n",
+        json.dumps({"question": "What is the policy?", "answer": "The policy is documented."})
+        + "\n",
         encoding="utf-8",
     )
 
@@ -62,7 +63,9 @@ def test_run_evaluation_aggregates_results(
         answer="The policy is documented [SOURCE: handbook.pdf, chunk c1].",
         cited_chunk_ids={"c1"},
         citation_coverage=1.0,
-        retrieved_hits=[{"chunk_id": "c1", "text": "Policy text", "source": "handbook.pdf", "page": 1}],
+        retrieved_hits=[
+            {"chunk_id": "c1", "text": "Policy text", "source": "handbook.pdf", "page": 1}
+        ],
     )
     mock_pipeline_cls.return_value = mock_pipeline
     mock_openai.return_value = MagicMock()

@@ -2,7 +2,12 @@
 
 from unittest.mock import MagicMock, patch
 
-from src.generation.generator import AnswerGenerator, AnswerResult, _extract_cited_chunk_ids, _has_citations
+from src.generation.generator import (
+    AnswerGenerator,
+    AnswerResult,
+    _extract_cited_chunk_ids,
+    _has_citations,
+)
 from src.generation.prompts import build_context_block, build_prompt
 
 
