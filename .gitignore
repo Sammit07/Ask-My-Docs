@@ -31,8 +31,10 @@ data/raw/
 .DS_Store
 Thumbs.db
 
-# Pytest
+# Pytest & type checking
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
 htmlcov/
 .coverage
 
