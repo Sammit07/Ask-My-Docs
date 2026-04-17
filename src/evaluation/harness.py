@@ -126,6 +126,11 @@ def run_evaluation(settings: Settings | None = None) -> EvalReport:
         expected = sample.get("answer", "")
 
         result = pipeline.ask(question)
+
+        if not result.retrieved_hits:
+            logger.warning("eval_sample_skipped_empty_index", i=i + 1, question=question[:80])
+            continue
+
         context_texts = [h["text"] for h in result.retrieved_hits]
 
         faith = faithfulness(result.answer, context_texts, judge_client, cfg.eval_model)
