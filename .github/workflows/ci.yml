@@ -83,11 +83,6 @@ jobs:
       - name: Install dependencies
         run: pip install -e ".[dev]"
 
-      - name: Prepare eval dataset
-        run: |
-          mkdir -p data
-          echo '${{ secrets.EVAL_DATASET_B64 }}' | base64 -d > data/eval_dataset.jsonl
-
       - name: Run evaluation harness
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

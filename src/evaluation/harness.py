@@ -117,6 +117,10 @@ def run_evaluation(settings: Settings | None = None) -> EvalReport:
     samples = [json.loads(line) for line in dataset_path.read_text().splitlines() if line.strip()]
     logger.info("eval_start", n_samples=len(samples))
 
+    if not samples:
+        logger.warning("eval_dataset_empty", path=str(dataset_path))
+        return report
+
     for i, sample in enumerate(samples):
         question = sample["question"]
         expected = sample.get("answer", "")
@@ -170,6 +174,10 @@ def main() -> None:
     report.print_summary()
 
     cfg = get_settings()
+    if not report.results:
+        logger.warning("eval_skipped_no_samples")
+        return
+
     failed = (
         report.avg_faithfulness < cfg.faithfulness_threshold
         or report.avg_relevancy < cfg.answer_relevancy_threshold
