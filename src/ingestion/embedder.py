@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import cast
+
 import numpy as np
 from openai import OpenAI
 from sentence_transformers import SentenceTransformer
@@ -68,5 +70,5 @@ class Embedder:
     def embed_chunks(self, chunks: list[Chunk]) -> np.ndarray:
         return self.embed_texts([c.text for c in chunks])
 
-    def embed_query(self, query: str) -> np.ndarray:  # type: ignore[return-value]
-        return self.embed_texts([query])[0]
+    def embed_query(self, query: str) -> np.ndarray:
+        return cast(np.ndarray, self.embed_texts([query])[0])
