@@ -44,23 +44,21 @@ class Embedder:
             vectors: list[list[float]] = []
             for start in range(0, len(texts), self._batch_size):
                 batch = texts[start : start + self._batch_size]
-                kwargs: dict[str, object] = {
-                    "model": self._model_name,
-                    "input": batch,
-                    "encoding_format": "float",
-                }
-                if self._dimensions is not None:
-                    kwargs["dimensions"] = self._dimensions
-                response = self._client.embeddings.create(**kwargs)
+                response = self._client.embeddings.create(
+                    model=self._model_name,
+                    input=batch,
+                    encoding_format="float",
+                    **({"dimensions": self._dimensions} if self._dimensions is not None else {}),  # type: ignore[arg-type]
+                )
                 vectors.extend(item.embedding for item in response.data)
 
             embeddings = np.asarray(vectors, dtype=np.float32)
             norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
-            return embeddings / np.clip(norms, a_min=1e-12, a_max=None)
+            return embeddings / np.clip(norms, a_min=1e-12, a_max=None)  # type: ignore[no-any-return]
 
         if self._model is None:
             raise RuntimeError("No embedding backend has been initialized.")
-        return self._model.encode(  # type: ignore[return-value]
+        return self._model.encode(  # type: ignore[return-value, no-any-return]
             texts,
             batch_size=self._batch_size,
             show_progress_bar=False,

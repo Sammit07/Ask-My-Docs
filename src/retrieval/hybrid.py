@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 import numpy as np
 
 from src.ingestion.embedder import Embedder
@@ -13,10 +15,10 @@ def _rrf_score(rank: int, k: int) -> float:
 
 
 def reciprocal_rank_fusion(
-    bm25_results: list[dict],
-    vector_results: list[dict],
+    bm25_results: list[dict[str, Any]],
+    vector_results: list[dict[str, Any]],
     rrf_k: int = 60,
-) -> list[dict]:
+) -> list[dict[str, Any]]:
     """Merge two ranked lists using RRF. Returns dicts sorted by fused score descending."""
     scores: dict[str, float] = {}
     by_id: dict[str, dict] = {}
@@ -50,7 +52,7 @@ class HybridRetriever:
         self._vector_top_k = vector_top_k
         self._rrf_k = rrf_k
 
-    def retrieve(self, query: str) -> list[dict]:
+    def retrieve(self, query: str) -> list[dict[str, Any]]:
         query_emb: np.ndarray = self._embedder.embed_query(query)
         bm25_hits = self._indexer.bm25_search(query, self._bm25_top_k)
         vector_hits = self._indexer.vector_search(query_emb, self._vector_top_k)

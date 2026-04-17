@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from typing import Any
 
 import structlog
 from openai import OpenAI
@@ -14,7 +15,7 @@ _ROUGE = rouge_scorer.RougeScorer(["rouge1", "rougeL"], use_stemmer=True)
 _CITATION_RE = re.compile(r"\[SOURCE:\s*[^\]]+,\s*chunk\s+\w+\]")
 
 
-def citation_coverage(answer: str, retrieved_hits: list[dict]) -> float:
+def citation_coverage(answer: str, retrieved_hits: list[dict[str, Any]]) -> float:
     """Fraction of retrieved chunks that are cited in the answer."""
     if not retrieved_hits:
         return 1.0

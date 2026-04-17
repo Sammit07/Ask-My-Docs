@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import pickle
 from pathlib import Path
+from typing import Any
 
 import chromadb
 import numpy as np
@@ -77,12 +78,15 @@ class DualIndexer:
         self._save_bm25()
         self._append_chunks_to_disk(chunks)
 
-    def vector_search(self, query_embedding: np.ndarray, top_k: int) -> list[dict]:
+    def vector_search(self, query_embedding: np.ndarray, top_k: int) -> list[dict[str, Any]]:
         results = self._collection.query(
             query_embeddings=[query_embedding.tolist()],
             n_results=min(top_k, self._collection.count() or 1),
             include=["documents", "metadatas", "distances"],
         )
+        assert results["documents"] is not None
+        assert results["metadatas"] is not None
+        assert results["distances"] is not None
         docs = results["documents"][0]
         metas = results["metadatas"][0]
         distances = results["distances"][0]
@@ -97,7 +101,7 @@ class DualIndexer:
             for i in range(len(docs))
         ]
 
-    def bm25_search(self, query: str, top_k: int) -> list[dict]:
+    def bm25_search(self, query: str, top_k: int) -> list[dict[str, Any]]:
         if not self._bm25 or not self._chunks:
             return []
         tokens = _tokenize(query)

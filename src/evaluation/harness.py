@@ -7,6 +7,7 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from statistics import mean
+from typing import Any
 
 import structlog
 from openai import OpenAI
@@ -63,7 +64,7 @@ class EvalReport:
     def pass_rate(self) -> float:
         return sum(r.passed for r in self.results) / max(len(self.results), 1)
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "total_samples": len(self.results),
             "pass_rate": self.pass_rate,

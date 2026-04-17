@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from typing import Any
 
 import structlog
 from openai import OpenAI
@@ -53,7 +54,7 @@ class AnswerGenerator:
         self._max_output_tokens = max_output_tokens
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10))
-    def generate(self, question: str, hits: list[dict]) -> AnswerResult:
+    def generate(self, question: str, hits: list[dict[str, Any]]) -> AnswerResult:
         prompt = build_prompt(question, hits)
         response = self._client.responses.create(
             model=self._model_name,
@@ -97,14 +98,14 @@ class AnswerResult:
         answer: str,
         cited_chunk_ids: set[str],
         citation_coverage: float,
-        retrieved_hits: list[dict],
+        retrieved_hits: list[dict[str, Any]],
     ):
         self.answer = answer
         self.cited_chunk_ids = cited_chunk_ids
         self.citation_coverage = citation_coverage
         self.retrieved_hits = retrieved_hits
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "answer": self.answer,
             "cited_chunk_ids": list(self.cited_chunk_ids),

@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import Any
+
 SYSTEM_PROMPT = """You are a precise document assistant. Answer the user's question using ONLY the provided context passages.
 
 Rules:
@@ -17,7 +21,7 @@ Question: {question}
 Answer (with citations):"""
 
 
-def build_context_block(hits: list[dict]) -> str:
+def build_context_block(hits: list[dict[str, Any]]) -> str:
     blocks = []
     for hit in hits:
         source = hit.get("source", "unknown")
@@ -28,6 +32,6 @@ def build_context_block(hits: list[dict]) -> str:
     return "\n\n".join(blocks)
 
 
-def build_prompt(question: str, hits: list[dict]) -> str:
+def build_prompt(question: str, hits: list[dict[str, Any]]) -> str:
     passages = build_context_block(hits)
     return CONTEXT_TEMPLATE.format(passages=passages, question=question)
