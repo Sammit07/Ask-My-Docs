@@ -2,6 +2,8 @@
 
 A production-grade RAG (Retrieval-Augmented Generation) system that lets you upload documents and ask questions against them with auditable citations.
 
+<img width="1882" height="861" alt="image" src="https://github.com/user-attachments/assets/393e8c6d-13da-4727-afc9-74e1f767d025" />
+
 ## Features
 
 - **Hybrid retrieval** — BM25 lexical search + OpenAI vector search fused with Reciprocal Rank Fusion (RRF)
