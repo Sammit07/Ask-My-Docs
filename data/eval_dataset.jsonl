@@ -1,0 +1,2 @@
+{"question": "What is the main purpose of this document?", "answer": "The document describes the system architecture and key components."}
+{"question": "What retrieval strategy is used?", "answer": "The system uses hybrid retrieval combining BM25 and vector search with RRF fusion."}
