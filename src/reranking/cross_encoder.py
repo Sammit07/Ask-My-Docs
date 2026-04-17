@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from sentence_transformers import CrossEncoder
 
 
@@ -14,7 +16,7 @@ class Reranker:
         self._model = CrossEncoder(model_name)
         self._top_k = top_k
 
-    def rerank(self, query: str, hits: list[dict]) -> list[dict]:
+    def rerank(self, query: str, hits: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Score each hit against the query and return top_k sorted by relevance."""
         if not hits:
             return []

@@ -21,7 +21,7 @@ def reciprocal_rank_fusion(
 ) -> list[dict[str, Any]]:
     """Merge two ranked lists using RRF. Returns dicts sorted by fused score descending."""
     scores: dict[str, float] = {}
-    by_id: dict[str, dict] = {}
+    by_id: dict[str, dict[str, Any]] = {}
 
     for rank, hit in enumerate(bm25_results):
         cid = hit["chunk_id"]

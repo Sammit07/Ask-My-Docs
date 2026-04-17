@@ -58,7 +58,7 @@ class Embedder:
 
         if self._model is None:
             raise RuntimeError("No embedding backend has been initialized.")
-        return self._model.encode(  # type: ignore[return-value, no-any-return]
+        return self._model.encode(  # type: ignore[return-value]
             texts,
             batch_size=self._batch_size,
             show_progress_bar=False,
@@ -68,5 +68,5 @@ class Embedder:
     def embed_chunks(self, chunks: list[Chunk]) -> np.ndarray:
         return self.embed_texts([c.text for c in chunks])
 
-    def embed_query(self, query: str) -> np.ndarray:
+    def embed_query(self, query: str) -> np.ndarray:  # type: ignore[return-value]
         return self.embed_texts([query])[0]
